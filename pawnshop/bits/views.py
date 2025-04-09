@@ -417,18 +417,7 @@ def bypass(request):
     if request.session.get('user_data') and Person.objects.filter(email=request.session.get('user_data')['email']).exists():
         return redirect('home')
     else:
-        user = authenticate(request, username='test', password='some1234')
-        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        if not Person.objects.filter(email='vishrut172@gmail.com').exists():
-            Person.objects.create(
-                email='vishrut172@gmail.com',
-                name='Vishrut',
-            )
-        request.session['user_data'] = {
-            'email': 'vishrut172@gmail.com',
-            'name': 'Vishrut'
-        }
-        return HttpResponseRedirect(reverse('home'))
+        return render(request, 'bits/home.html', {'items': Item.objects.all()[:16], 'categories': Category.objects.all()})
 
 def custom_page_not_found(request, exception):
     return render(request, 'bits/404.html', status=404)

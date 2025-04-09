@@ -4,12 +4,612 @@
 {% block title %}BITS Pilani Pawnshop - Home{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'bits/home.css' %}">
+<style>
+    /* Hero section styles */
+    .hero-section {
+        background: linear-gradient(135deg, #3b5ce5, #6c63ff);
+        border-radius: 16px;
+        padding: 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(59, 92, 229, 0.2);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 600px;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: #3b5ce5;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-cta i {
+        margin-right: 8px;
+    }
+
+    .hero-pattern {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 40%;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.5;
+    }
+
+    /* Categories section styles */
+    .categories-section {
+        margin-bottom: 30px;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text);
+        position: relative;
+        padding-bottom: 8px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 3px;
+    }
+
+    .view-all {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .view-all:hover {
+        color: var(--secondary);
+    }
+
+    .view-all i {
+        margin-left: 6px;
+        font-size: 0.9rem;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+
+    .category-card {
+        background: white;
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+        height: 100%;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow);
+        border-color: var(--primary-light);
+    }
+
+    .category-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--primary-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        color: var(--primary);
+        font-size: 1.5rem;
+    }
+
+    .category-name {
+        color: var(--text);
+        font-weight: 600;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    .category-count {
+        color: var(--text-light);
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
+
+    /* Items section */
+    .items-container {
+        padding: 0;
+        margin-bottom: 40px;
+    }
+
+    .items-section-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: var(--text);
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 8px;
+    }
+
+    .items-section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 3px;
+    }
+
+    /* Items grid */
+    .items-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    /* Item card styles */
+    .item-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border: 1px solid var(--border-color);
+    }
+
+    .item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow);
+        border-color: var(--primary-light);
+    }
+
+    /* Sold item styling */
+    .item-card.sold {
+        opacity: 0.9;
+        background-color: #f8f9fa;
+    }
+
+    .sold-marker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+        pointer-events: none;
+        border-radius: 12px;
+    }
+
+    .sold-text {
+        font-size: 24px;
+        font-weight: 800;
+        transform: rotate(-30deg);
+        background-color: rgba(255, 107, 107, 0.9);
+        padding: 5px 24px;
+        border-radius: 30px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        color: white;
+    }
+
+    /* Item image */
+    .item-image {
+        height: 180px;
+        background-color: #f9f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .item-image img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+        transition: transform 0.3s ease;
+    }
+
+    .item-card:hover .item-image img {
+        transform: scale(1.05);
+    }
+
+    /* Item info section */
+    .item-info {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .item-title {
+        font-size: 16px;
+        margin: 0 0 10px 0;
+        color: var(--text);
+        font-weight: 600;
+        line-height: 1.3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .item-price {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+
+    /* Description with 2-line truncation */
+    .item-description-container {
+        margin-bottom: 14px;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 13px;
+        position: relative;
+    }
+
+    .item-description {
+        line-height: 1.5;
+        color: var(--text-light);
+        max-height: 3em; /* Approximately 2 lines */
+        overflow: hidden;
+        position: relative;
+    }
+
+    .item-description::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 70%;
+        height: 1.5em; /* Height of one line */
+        background: linear-gradient(to right, rgba(248, 249, 250, 0), rgba(248, 249, 250, 1) 90%);
+        pointer-events: none;
+    }
+
+    /* Item metadata */
+    .item-meta {
+        margin-top: auto;
+        font-size: 12px;
+        color: var(--text-light);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 12px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .meta-label {
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .item-meta i {
+        margin-right: 6px;
+        color: var(--primary);
+    }
+
+    /* WhatsApp contact button */
+    .item-actions {
+        margin-top: 12px;
+    }
+
+    .whatsapp-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #25D366;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 13px;
+        z-index: 2;
+        position: relative;
+    }
+
+    .whatsapp-link:hover {
+        background-color: #128C7E;
+    }
+
+    .whatsapp-link i {
+        margin-right: 8px;
+        font-size: 16px;
+    }
+
+    /* No items message */
+    .no-items {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 50px 30px;
+        background-color: #fff;
+        border-radius: 12px;
+        color: var(--text-light);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        border: 1px dashed var(--border-color);
+    }
+
+    .no-items i {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 2.5rem;
+        opacity: 0.7;
+    }
+
+    /* Pagination Styles */
+    .pagination-container {
+        margin-top: 30px;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .pagination li {
+        margin: 0 4px;
+    }
+    
+    .pagination .page-item a,
+    .pagination .page-item span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text);
+        background-color: white;
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+    
+    .pagination .page-item a:hover {
+        background-color: var(--primary-light);
+        color: var(--primary);
+        border-color: var(--primary-light);
+    }
+    
+    .pagination .page-item.active span {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 2px 8px rgba(59, 92, 229, 0.2);
+    }
+    
+    .pagination .page-item.disabled span {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #f5f7fa;
+    }
+
+    /* Campus badge */
+    .campus-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-right: 8px;
+        background-color: var(--primary-light);
+        color: var(--primary);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .hero-section {
+            padding: 30px;
+        }
+        
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .hero-title {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .hero-subtitle {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero-pattern {
+            opacity: 0.3;
+            width: 50%;
+        }
+
+        .categories-grid {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+        
+        .items-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+        }
+        
+        .item-image {
+            height: 160px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-section {
+            padding: 20px;
+        }
+        
+        .hero-title {
+            font-size: 1.3rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 0.9rem;
+        }
+        
+        .hero-cta {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+        }
+
+        .categories-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        
+        .items-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+        
+        .item-image {
+            height: 140px;
+        }
+        
+        .section-title, .items-section-title {
+            font-size: 1.3rem;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Find Great Deals on Campus</h1>
+        <p class="hero-subtitle">Buy and sell items with BITS students from all campuses. Find what you need at the best price!</p>
+        <a href="{% url 'add_product' %}" class="hero-cta">
+            <i class="fas fa-tag"></i> Start Selling Now
+        </a>
+    </div>
+    <div class="hero-pattern"></div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section">
+    <div class="section-header">
+        <h2 class="section-title">Browse Categories</h2>
+        <a href="{% url 'categories' %}" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+    </div>
+    
+    <div class="categories-grid">
+        {% for category in categories|slice:":6" %}
+        <a href="{% url 'home' %}?c={{ category.id }}{% if request.GET.campus %}&campus={{ request.GET.campus }}{% endif %}" class="category-card">
+            <div class="category-icon">
+                <i class="{{ category.icon_class|default:'fas fa-box' }}"></i>
+            </div>
+            <div class="category-name">{{ category.name }}</div>
+            <div class="category-count">{{ category.items.count }} items</div>
+        </a>
+        {% empty %}
+        <!-- If no categories are available -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: var(--text-light);">
+            <i class="fas fa-folder-open fa-2x"></i>
+            <p>No categories available</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Main Items Section -->
 <div class="items-container">
-    <h2 class="section-title">
+    <h2 class="items-section-title">
         {% if selected_campus == 'GOA' %}
             Goa Campus
         {% elif selected_campus == 'HYD' %}
@@ -56,9 +656,12 @@
                     </div>
                     <div class="item-hostel">
                         <i class="fas fa-building"></i> <span class="meta-label">Hostel:</span> {{ item.hostel.name }}
+                        {% if selected_campus == 'ALL' %}
+                        <span class="campus-badge">{{ item.seller.campus }}</span>
+                        {% endif %}
                     </div>
                     <div class="item-date">
-                        <i class="far fa-calendar-alt"></i> <span class="meta-label">Listed:</span> {{ item.added_at|date:"M d, Y H:i" }}
+                        <i class="far fa-calendar-alt"></i> <span class="meta-label">Listed:</span> {{ item.added_at|date:"M d, Y" }}
                     </div>
                 </div>
 
@@ -75,9 +678,12 @@
         </div>
         {% empty %}
         <div class="no-items">
-            <i class="fas fa-search fa-2x"></i>
+            <i class="fas fa-search"></i>
             <p>No items available at the moment.</p>
-            <p>Check back soon for new listings!</p>
+            <p>Check back soon for new listings or be the first to sell something!</p>
+            <a href="{% url 'add_product' %}" class="hero-cta" style="margin-top: 10px;">
+                <i class="fas fa-plus"></i> Add Item
+            </a>
         </div>
         {% endfor %}
     </div>
@@ -140,4 +746,10 @@
     </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add any additional JavaScript needed for the homepage
+</script>
 {% endblock %}
